@@ -1,2 +1,2 @@
-# Modern_CPP_Practice
-Repository for self-practicing some modern CPP features
+# CUDA_Practice
+Repository for self-practicing some CUDA programs
