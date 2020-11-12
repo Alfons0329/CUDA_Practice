@@ -16,6 +16,7 @@ nvcc main_1D.cu
 
 ## Benchmark log
 
+```
 CPU time (ms): 5479
 GPU time (ms): 3
 Check integrity
@@ -85,6 +86,7 @@ Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
 1024, 1024, 1024, 1024, 1711.666626
+```
 
 ## Future to-do
 * Shared memory architecture in square matrix
