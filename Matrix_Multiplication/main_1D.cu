@@ -4,16 +4,15 @@
 #include <sys/time.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
+const int seed = 3333;
 using namespace std;
 
 void mul_cpu(int row_A, int col_A, int col_B, int* mat_A, int* mat_B, int* mat_C){
     for(int i = 0; i < row_A; i++){
         for(int j = 0; j < col_B; j++){
             for(int k = 0; k < col_A; k++){
-                // printf("%d x %d, ", mat_A[i][k], mat_B[k][j]);
                 mat_C[i * col_B + j] += mat_A[i * col_A + k] * mat_B[k * col_B + j];
             }
-            // printf("\n");
         }
     }
 }
@@ -23,6 +22,7 @@ __global__ void mul_cuda(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* 
     int col = blockIdx.x * blockDim.x + threadIdx.x;
 
     if(row < row_A && col < col_B && row >= 0 && col >= 0){
+        // printf("GPU row %d col %d row_A %d col_A %d col_B %d\n", row, col, row_A, col_A, col_B);
         for(int k = 0; k < col_A; k++){
             mat_C_CUDA[row * col_B + col] += mat_A_CUDA[row * col_A + k] * mat_B_CUDA[k * col_B + col];
         }        
@@ -30,15 +30,17 @@ __global__ void mul_cuda(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* 
 }
 
 int* init(int row, int col, bool is_C){
-    int* mat = (int*) malloc(row * col * sizeof(int *));
+    int* mat = (int *)malloc(row * col * sizeof(int ));
 
-    random_device rd;
-    mt19937 generator(rd());
-    uniform_int_distribution<int> unif(INT_MIN, INT_MAX);
+    // random_device rd;
+    // mt19937 generator(rd());
+    // uniform_int_distribution<int> unif(-1000, 1000);
+    srand(seed);
 
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
-            mat[i * col + j] = is_C ? 0 : unif(generator);
+            // mat[i * col + j] = is_C ? 0 : unif(generator);
+            mat[i * col + j] = is_C ? 0 : 1;
         }
     }
 
@@ -115,12 +117,13 @@ int main(int argc, char* argv[]){
     }
 
     const int THREAD_SQRT = (int)sqrt(atoi(argv[4]));
-    const dim3 dim_block(THREAD_SQRT, THREAD_SQRT);
-    const dim3 dim_grid((row_A + THREAD_SQRT + 1) / THREAD_SQRT,(col_B + THREAD_SQRT + 1) / THREAD_SQRT);
+    // const int THREAD_SQRT = 16;
+    const dim3 dimBlock(THREAD_SQRT, THREAD_SQRT);
+    const dim3 dimGrid((row_A + THREAD_SQRT - 1) / THREAD_SQRT,(col_B + THREAD_SQRT - 1) / THREAD_SQRT);
 
     /*-------------- CUDA run -------------*/
     gettimeofday(&start, 0);
-    mul_cuda<<<dim_grid, dim_block, 0>>>(row_A, col_A, col_B, mat_A_CUDA, mat_B_CUDA, mat_C_CUDA);
+    mul_cuda<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA, mat_B_CUDA, mat_C_CUDA);
     cudaError_t ce_K; // cuda erroe for kernel
     ce_K = cudaDeviceSynchronize();
     if(ce_K != cudaSuccess){
@@ -144,12 +147,16 @@ int main(int argc, char* argv[]){
     printf("Check integrity\n");
     for(int i = 0; i < row_A; i++){
         for(int j = 0; j < col_B; j++){
-            assert(res_CPU[i * col_B + j] == res_GPU[i * col_B + j]);
+            if(res_CPU[i * col_B + j] != res_GPU[i * col_B + j]){
+                printf("result at (row %d, col %d) CPU %d != GPU %d \n", i, j, res_CPU[i * col_B + j], res_GPU[i * col_B + j]);
+                exit(-1);
+            }
         }
+        printf("\n");
     }
     printf("Integrity pass!, CPU result == GPU result, all finished\n");
     printf("[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: \n");
-    printf("%d, %d, %d, %d, %f\n", row_A, col_A, col_B, atoi(argv[4]), (float)t_cpu / (float)t_gpu);
+    printf("%d, %d, %d, %d, %f\n\n\n", row_A, col_A, col_B, atoi(argv[4]), (float)t_cpu / (float)t_gpu);
 
     /*------- Clear memory -------------*/
     cudaFree(mat_A_CUDA);
