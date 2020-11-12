@@ -131,7 +131,7 @@ int main(int argc, char* argv[]){
     sec = end.tv_sec - start.tv_sec;
     usec = end.tv_usec - start.tv_usec;
     int t_gpu = sec * 1000 + (usec / 1000);
-    cout << "GPU CUDA time (ms): " << t_gpu << '\n';
+    printf("CPU serial time (ms): %d\n", t_gpu);
 
     /*------- Check integrity -------------*/
     res_GPU = init(row_A, col_B, true);
