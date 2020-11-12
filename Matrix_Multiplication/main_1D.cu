@@ -1,3 +1,5 @@
+// CUDA blockDim, gridDim configured as method 2 in https://blog.csdn.net/yongjiankuang/article/details/90180559
+
 #include <bits/stdc++.h>
 #include <sys/time.h>
 #include <cuda.h>
@@ -26,7 +28,6 @@ __global__ void mul_cuda(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* 
         }        
     }
 }
-
 
 int* init(int row, int col, bool is_C){
     int* mat = (int*) malloc(row * col * sizeof(int *));
@@ -57,7 +58,7 @@ int main(int argc, char* argv[]){
     int* res_GPU;
 
     if(argc != 5){
-        fprintf(stderr, "%s", "Usage: ./a.out $row_A $col_A $col_B BLOCK_SIZE in 1Dim direction\n");
+        fprintf(stderr, "%s", "Usage: ./a.out $row_A $col_A $col_B $thread_count_in_block in 1Dim direction\n");
         exit(-1);
     }
 
@@ -89,6 +90,7 @@ int main(int argc, char* argv[]){
             mat_C[i * col_B + j] = 0;
         }
     }
+
     /*-------------- CUDA init ------------*/
     cudaError_t ce_A, ce_B, ce_C;
 
@@ -112,10 +114,9 @@ int main(int argc, char* argv[]){
         exit(2);
     }
 
-    const int BLOCK_SIZE = (int)sqrt(atoi(argv[4]));
-    // configured as method 2 in https://blog.csdn.net/yongjiankuang/article/details/90180559
-    const dim3 dim_block(BLOCK_SIZE, BLOCK_SIZE);
-    const dim3 dim_grid((row_A + BLOCK_SIZE + 1) / BLOCK_SIZE,(col_B + BLOCK_SIZE + 1) / BLOCK_SIZE);
+    const int THREAD_SQRT = (int)sqrt(atoi(argv[4]));
+    const dim3 dim_block(THREAD_SQRT, THREAD_SQRT);
+    const dim3 dim_grid((row_A + THREAD_SQRT + 1) / THREAD_SQRT,(col_B + THREAD_SQRT + 1) / THREAD_SQRT);
 
     /*-------------- CUDA run -------------*/
     gettimeofday(&start, 0);
@@ -147,16 +148,18 @@ int main(int argc, char* argv[]){
         }
     }
     printf("Integrity pass!, CPU result == GPU result, all finished\n");
-    printf("[row_A, col_A, col_B, Accelerate ratio (times)]: \n");
-    printf("%d, %d, %d, %f\n", row_A, col_A, col_B, (float)t_cpu / (float)t_gpu);
+    printf("[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: \n");
+    printf("%d, %d, %d, %d, %f\n", row_A, col_A, col_B, atoi(argv[4]), (float)t_cpu / (float)t_gpu);
 
     /*------- Clear memory -------------*/
     cudaFree(mat_A_CUDA);
     cudaFree(mat_B_CUDA);
     cudaFree(mat_C_CUDA);
+    cudaFree(res_GPU);
     free(mat_A);
     free(mat_B);
     free(mat_C);
+    free(res_GPU);
 
     return 0;
 }
