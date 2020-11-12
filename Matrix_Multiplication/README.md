@@ -1,4 +1,4 @@
-# CUDA Matrix multiplication (support)
+# CUDA Matrix multiplication (support both rectangular and square matrix)
 
 ## Usage:
 
@@ -17,75 +17,84 @@ nvcc main_1D.cu
 ## Benchmark log
 
 ```
-CPU time (ms): 5479
+CPU time (ms): 5231
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1826.333374
+1024, 1024, 1024, 1024, 1743.666626
 
-CPU time (ms): 63077
-GPU time (ms): 28
+CPU time (ms): 66555
+GPU time (ms): 30
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-2048, 2048, 2048, 1024, 2252.750000
+2048, 2048, 2048, 1024, 2218.500000
 
-CPU time (ms): 1208120
-GPU time (ms): 214
+CPU time (ms): 1204433
+GPU time (ms): 211
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-4096, 4096, 4096, 1024, 5645.420410
+4096, 4096, 4096, 1024, 5708.213379
 
-CPU time (ms): 5134
+CPU time (ms): 11786859
+GPU time (ms): 1660
+Check integrity
+Integrity pass!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
+8192, 8192, 8192, 1024, 7100.517578
+
+CPU time (ms): 5166
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1711.333374
+1024, 1024, 1024, 1024, 1722.000000
 
-CPU time (ms): 10396
+CPU time (ms): 10391
 GPU time (ms): 7
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 2048, 1024, 1485.142822
+1024, 1024, 2048, 1024, 1484.428589
 
-CPU time (ms): 26328
+CPU time (ms): 27142
 GPU time (ms): 14
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 4096, 1024, 1880.571411
+1024, 1024, 4096, 1024, 1938.714233
 
-CPU time (ms): 5149
+CPU time (ms): 5162
 GPU time (ms): 16
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 16, 321.812500
+1024, 1024, 1024, 16, 322.625000
 
-CPU time (ms): 5128
+CPU time (ms): 5177
 GPU time (ms): 4
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 64, 1282.000000
+1024, 1024, 1024, 64, 1294.250000
 
-CPU time (ms): 5133
+CPU time (ms): 5154
 GPU time (ms): 4
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 256, 1283.250000
+1024, 1024, 1024, 256, 1288.500000
 
-CPU time (ms): 5135
+CPU time (ms): 5164
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
 [row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1711.666626
+1024, 1024, 1024, 1024, 1721.333374
+
+
 ```
 
 ## Future to-do

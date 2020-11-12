@@ -4,7 +4,6 @@
 #include <sys/time.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
-const int seed = 3333;
 using namespace std;
 
 void mul_cpu(int row_A, int col_A, int col_B, int* mat_A, int* mat_B, int* mat_C){
@@ -31,15 +30,13 @@ __global__ void mul_cuda(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* 
 int* init(int row, int col, bool is_C){
     int* mat = (int *)malloc(row * col * sizeof(int ));
 
-    // random_device rd;
-    // mt19937 generator(rd());
-    // uniform_int_distribution<int> unif(-1000, 1000);
-    srand(seed);
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> unif(-1000, 1000);
 
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
-            // mat[i * col + j] = is_C ? 0 : unif(generator);
-            mat[i * col + j] = is_C ? 0 : 1;
+            mat[i * col + j] = is_C ? 0 : unif(generator);
         }
     }
 

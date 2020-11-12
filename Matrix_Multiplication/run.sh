@@ -4,7 +4,7 @@ set -e
 echo "row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)" > res.csv
 
 base=1024
-for i in {1..3}
+for i in {1..4}
 do
     ./a.out $base $base $base 1024 #| tail - n 1 >> res.csv
     base=$((2 * $base))
