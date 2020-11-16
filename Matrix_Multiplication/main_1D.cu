@@ -52,6 +52,9 @@ int main(int argc, char* argv[]){
     int* mat_A_CUDA;
     int* mat_B_CUDA;
     int* mat_C_CUDA;
+    int* mat_A_CUDA_pinned;
+    int* mat_B_CUDA_pinned;
+    int* mat_C_CUDA_pinned;
     int* res_CPU;
     int* res_GPU;
 
@@ -143,12 +146,8 @@ int main(int argc, char* argv[]){
     printf("Check integrity\n");
     for(int i = 0; i < row_A; i++){
         for(int j = 0; j < col_B; j++){
-            if(res_CPU[i * col_B + j] != res_GPU[i * col_B + j]){
-                printf("result at (row %d, col %d) CPU %d != GPU %d \n", i, j, res_CPU[i * col_B + j], res_GPU[i * col_B + j]);
-                exit(-1);
-            }
+            assert(res_CPU[i * col_B + j] == res_GPU[i * col_B + j]);
         }
-        // printf("\n");
     }
     printf("Integrity pass!, CPU result == GPU result, all finished\n");
     printf("[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: \n");
@@ -158,10 +157,67 @@ int main(int argc, char* argv[]){
     cudaFree(mat_A_CUDA);
     cudaFree(mat_B_CUDA);
     cudaFree(mat_C_CUDA);
-    cudaFree(res_GPU);
+    
+    /*-------------- CUDA init, pinned mem -*/ 
+
+    ce_A = cudaMallocHost((void**) &mat_A_CUDA_pinned, row_A * col_A * sizeof(int));
+    ce_B = cudaMallocHost((void**) &mat_B_CUDA_pinned, col_A * col_B * sizeof(int));
+    ce_C = cudaMallocHost((void**) &mat_C_CUDA_pinned, row_A * col_B * sizeof(int));
+    if( ce_A != cudaSuccess ||
+        ce_B != cudaSuccess || 
+        ce_C != cudaSuccess){
+        fprintf(stderr, "%s", "cudaMallocHost failed\n");
+        exit(1);
+    }
+
+    ce_A = cudaMemcpy(mat_A_CUDA_pinned, mat_A, row_A * col_A * sizeof(int), cudaMemcpyHostToDevice);
+    ce_B = cudaMemcpy(mat_B_CUDA_pinned, mat_B, col_A * col_B * sizeof(int), cudaMemcpyHostToDevice);
+    ce_C = cudaMemcpy(mat_C_CUDA_pinned, mat_C, row_A * col_B * sizeof(int), cudaMemcpyHostToDevice);
+    if( ce_A != cudaSuccess ||
+        ce_B != cudaSuccess || 
+        ce_C != cudaSuccess){
+        fprintf(stderr, "%s", "cudaMemcpyHostToDevice, pinned memory failed\n");
+        exit(2);
+    }
+
+    /*-------------- CUDA run, pinned mem -*/ 
+    gettimeofday(&start, 0);
+    mul_cuda<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA_pinned, mat_B_CUDA_pinned, mat_C_CUDA_pinned);
+    ce_K = cudaDeviceSynchronize();
+    if(ce_K != cudaSuccess){
+        fprintf(stderr, "%s", "cudaDeviceSynchronize, pinned memory failed\n");
+        exit(3);
+    }
+    gettimeofday(&end, 0);
+    sec = end.tv_sec - start.tv_sec;
+    usec = end.tv_usec - start.tv_usec;
+    printf("GPU time, pinned memory (ms): %d\n", t_gpu);
+
+    /*------- Check integrity, pinned mem -*/
+    res_GPU = init(row_A, col_B, true);
+    ce_C = cudaMemcpy(res_GPU, mat_C_CUDA_pinned, row_A * col_B * sizeof(int), cudaMemcpyDeviceToHost);
+    if(ce_C != cudaSuccess){
+        fprintf(stderr, "%s", "cudaMemcpyDeviceToHost, pinned memory failed\n");
+        exit(4);
+    }
+
+    printf("Check integrity, pinned memory\n");
+    for(int i = 0; i < row_A; i++){
+        for(int j = 0; j < col_B; j++){
+            assert(res_CPU[i * col_B + j] == res_GPU[i * col_B + j]);
+        }
+    }
+    printf("Integrity pass, pinned memory!, CPU result == GPU result, all finished\n");
+    printf("[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: \n");
+    printf("%d, %d, %d, %d, %f\n\n", row_A, col_A, col_B, atoi(argv[4]), (float)t_cpu / (float)t_gpu);
+
+    /*------- Clear memory -------------*/
     free(mat_A);
     free(mat_B);
     free(mat_C);
+    cudaFreeHost(mat_A_CUDA_pinned);
+    cudaFreeHost(mat_B_CUDA_pinned);
+    cudaFreeHost(mat_C_CUDA_pinned);
     free(res_GPU);
 
     return 0;
