@@ -1,77 +1,143 @@
-CPU time (ms): 5231
+CPU time (ms): 5118
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1743.666626
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 1706.000000
 
-CPU time (ms): 66555
-GPU time (ms): 30
+GPU time, pinned memory (ms): 334
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 15.323354
+
+CPU time (ms): 63058
+GPU time (ms): 29
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-2048, 2048, 2048, 1024, 2218.500000
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+2048, 2048, 2048, 1024, 2174.413818
 
-CPU time (ms): 1204433
-GPU time (ms): 211
+GPU time, pinned memory (ms): 2677
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+2048, 2048, 2048, 1024, 23.555473
+
+CPU time (ms): 1208729
+GPU time (ms): 223
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-4096, 4096, 4096, 1024, 5708.213379
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+4096, 4096, 4096, 1024, 5420.309570
 
-CPU time (ms): 11786859
-GPU time (ms): 1660
+GPU time, pinned memory (ms): 21446
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+4096, 4096, 4096, 1024, 56.361511
+
+CPU time (ms): 11517419
+GPU time (ms): 1662
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-8192, 8192, 8192, 1024, 7100.517578
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+8192, 8192, 8192, 1024, 6929.854980
 
-CPU time (ms): 5166
+GPU time, pinned memory (ms): 171635
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+8192, 8192, 8192, 1024, 67.104141
+
+CPU time (ms): 5157
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1722.000000
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 1719.000000
 
-CPU time (ms): 10391
-GPU time (ms): 7
+GPU time, pinned memory (ms): 334
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 15.440120
+
+CPU time (ms): 10226
+GPU time (ms): 6
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 2048, 1024, 1484.428589
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 2048, 1024, 1704.333374
 
-CPU time (ms): 27142
-GPU time (ms): 14
+GPU time, pinned memory (ms): 668
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 2048, 1024, 15.308383
+
+CPU time (ms): 25887
+GPU time (ms): 13
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 4096, 1024, 1938.714233
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 4096, 1024, 1991.307739
 
-CPU time (ms): 5162
+GPU time, pinned memory (ms): 1335
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 4096, 1024, 19.391010
+
+CPU time (ms): 5106
 GPU time (ms): 16
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 16, 322.625000
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 16, 319.125000
 
-CPU time (ms): 5177
-GPU time (ms): 4
-Check integrity
-Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 64, 1294.250000
+GPU time, pinned memory (ms): 1823
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 16, 2.800878
 
-CPU time (ms): 5154
-GPU time (ms): 4
-Check integrity
-Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 256, 1288.500000
-
-CPU time (ms): 5164
+CPU time (ms): 5109
 GPU time (ms): 3
 Check integrity
 Integrity pass!, CPU result == GPU result, all finished
-[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]:
-1024, 1024, 1024, 1024, 1721.333374
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 64, 1703.000000
+
+GPU time, pinned memory (ms): 923
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 64, 5.535211
+
+CPU time (ms): 5109
+GPU time (ms): 3
+Check integrity
+Integrity pass!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 256, 1703.000000
+
+GPU time, pinned memory (ms): 390
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 256, 13.100000
+
+CPU time (ms): 5110
+GPU time (ms): 3
+Check integrity
+Integrity pass!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 1703.333374
+
+GPU time, pinned memory (ms): 334
+Check integrity, pinned memory
+Integrity pass, pinned memory!, CPU result == GPU result, all finished
+[row_A, col_A, col_B, block_size(thread cnt), Accelerate ratio (times)]: 
+1024, 1024, 1024, 1024, 15.299401
 

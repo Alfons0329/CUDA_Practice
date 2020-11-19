@@ -191,6 +191,7 @@ int main(int argc, char* argv[]){
     gettimeofday(&end, 0);
     sec = end.tv_sec - start.tv_sec;
     usec = end.tv_usec - start.tv_usec;
+    t_gpu = sec * 1000 + (usec / 1000);
     printf("GPU time, pinned memory (ms): %d\n", t_gpu);
 
     /*------- Check integrity, pinned mem -*/
@@ -218,6 +219,7 @@ int main(int argc, char* argv[]){
     cudaFreeHost(mat_A_CUDA_pinned);
     cudaFreeHost(mat_B_CUDA_pinned);
     cudaFreeHost(mat_C_CUDA_pinned);
+    free(res_CPU);
     free(res_GPU);
 
     return 0;
