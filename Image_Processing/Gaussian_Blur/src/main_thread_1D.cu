@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 20
+#define N_STREAMS 4
 
 // Gaussian filter
 int filter_size;
@@ -138,7 +138,6 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
     int t_gpu = sec * 1000 + (usec / 1000);
     printf(ANSI_COLOR_RED "GPU time (ms): %d " ANSI_COLOR_RESET "\n", t_gpu);
     img_write(img_name, img_output, img_row, img_col, 1, async);
-    // img_write(img_name, img_input, img_row, img_col, 1, async);
     
     cuda_err_chk(cudaFree(img_input_cuda), cudaError_cnt++);
     cuda_err_chk(cudaFree(img_output_cuda), cudaError_cnt++);
@@ -212,8 +211,8 @@ int main(int argc, char* argv[]){
     
     printf(ANSI_COLOR_YELLOW "[RESULT]: [img_row, img_col, threads in each block]" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_YELLOW "[RESULT]: [stream workers, speedup ratio]" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_RED ">>> %d, %d, %d" ANSI_COLOR_RESET "\n", img_row, img_col, thread_cnt);
-    printf(ANSI_COLOR_RED ">>> %d, %5.2f" ANSI_COLOR_RESET "\n", N_STREAMS, ((float) t1 / (float)t2));
+    printf(ANSI_COLOR_RED "%d, %d, %d" ANSI_COLOR_RESET "\n", img_row, img_col, thread_cnt);
+    printf(ANSI_COLOR_RED "%d, %5.2f" ANSI_COLOR_RESET "\n", N_STREAMS, ((float) t1 / (float)t2));
     
     /*-------------- Cleanup ------------*/
     free_memory();

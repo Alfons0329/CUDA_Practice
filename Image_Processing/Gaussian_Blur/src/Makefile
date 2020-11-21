@@ -3,6 +3,10 @@
 TARGET_1D=gb_1D.o
 SOURCE_1D=main_thread_1D.cu
 
+# Thread dim in 2D
+TARGET_2D=gb_2D.o
+SOURCE_2D=main_thread_2D.cu
+
 #------------------------Compiler and flag-----------------------#
 # Compilers
 CC=g++
@@ -15,15 +19,16 @@ OPENCV_LIBS=`pkg-config --cflags --libs opencv`
 CXXFLAGS=-O3 -std=c++14
 
 #---------------------------Rules-------------------------------#
-all: cuda_1D
+all: cuda_1D cuda_2D
 
-# Rules for pthread Gaussian Blur
 pthread: $(SOURCE_PTHREAD)
 	$(CC) $(SOURCE_PTHREAD) -o $(TARGET_PTHREAD) $(CXXFLAGS) $(PTHREAD_LIBS) $(LIBS) $(OPENCV_LIBS)
 
- #Rules for CUDA Gaussian Blur
 cuda_1D: $(SOURCE_1D)
 	$(NVCC) $(SOURCE_1D) -o $(TARGET_1D) $(CXXFLAGS) $(LIBS) $(OPENCV_LIBS)
+
+cuda_2D: $(SOURCE_2D)
+	$(NVCC) $(SOURCE_2D) -o $(TARGET_2D) $(CXXFLAGS) $(LIBS) $(OPENCV_LIBS)
 
 .PHONY: clean
 
