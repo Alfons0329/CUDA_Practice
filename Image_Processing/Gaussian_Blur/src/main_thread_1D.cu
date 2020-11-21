@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 4
+#define N_STREAMS 20
 
 // Gaussian filter
 int filter_size;
