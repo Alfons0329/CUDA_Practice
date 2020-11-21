@@ -10,7 +10,7 @@ tune_streams(){
         sed -i "18s/#define.*/#define\ N_STREAMS\ $streams/" main_thread_$1D.cu
         mkdir -p ../report/profiling/$streams\_streams/
         make cuda_$1D -j16
-        nsys profile -o ../report/profiling/$streams\_streams/profile_data --stats true ./src/gb_$1D.o ../$2 2>  ../report/profiling/$streams\_streams/profile_data.txt
+        nsys profile -o ../report/profiling/$streams\_streams/nsys_data_$1D --stats true --force-overwrite true ./src/gb_$1D.o ../$2 2>  ../report/profiling/$streams\_streams/stat_data_$1D.txt
         ./gb_$1D.o $2 | tail -n 1 >> res.csv
         mv *jpg ../img_output/
     done
