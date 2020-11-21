@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 20
+#define N_STREAMS 80
 
 // Gaussian filter
 int filter_size;
@@ -211,8 +211,8 @@ int main(int argc, char* argv[]){
     
     printf(ANSI_COLOR_YELLOW "[RESULT]: [img_row, img_col, threads in each block]" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_YELLOW "[RESULT]: [stream workers, speedup ratio]" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_RED "%d, %d, %d" ANSI_COLOR_RESET "\n", img_row, img_col, thread_cnt);
-    printf(ANSI_COLOR_RED "%d, %5.2f" ANSI_COLOR_RESET "\n", N_STREAMS, ((float) t1 / (float)t2));
+    printf("%d, %d, %d" ANSI_COLOR_RESET "\n", img_row, img_col, thread_cnt);
+    printf("%d, %5.2f" ANSI_COLOR_RESET "\n", N_STREAMS, ((float) t1 / (float)t2));
     
     /*-------------- Cleanup ------------*/
     free_memory();
