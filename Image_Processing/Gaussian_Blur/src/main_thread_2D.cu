@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 240
+#define N_STREAMS 2
 
 // Gaussian filter
 int filter_size;
@@ -40,7 +40,7 @@ void cuda_err_chk(const cudaError_t& e, const int& cudaError_cnt){
 }
 
 // Kernel, 1D dim and grid configuration version
-__global__ void cuda_gaussian_filter_thread_1D(unsigned char* img_input_cuda, unsigned char* img_output_cuda, int img_row, int img_col, int shift, unsigned int* filter_cuda, int filter_row, unsigned int filter_scale, int img_border){
+__global__ void cuda_gaussian_filter_thread_2D(unsigned char* img_input_cuda, unsigned char* img_output_cuda, int img_row, int img_col, int shift, unsigned int* filter_cuda, int filter_row, unsigned int filter_scale, int img_border){
     int cuda_col = blockIdx.x * blockDim.x + threadIdx.x;
     int cuda_row = blockIdx.y * blockDim.y + threadIdx.y;
     // printf("co %d cr %d cc %d \n", cuda_offset, cuda_row, cuda_col);
@@ -115,7 +115,7 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
             cuda_err_chk(cudaMemcpyAsync(img_output_cuda + offset, img_output + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
             
             for(int i = 0; i < 3; i++) {
-                cuda_gaussian_filter_thread_1D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
+                cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
             }
             
             cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
@@ -125,11 +125,11 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
         /*-------------- CUDA run sync ------------*/
         cuda_err_chk(cudaMemcpy(img_input_cuda, img_input, resolution * sizeof(unsigned char), cudaMemcpyHostToDevice), cudaError_cnt++);
         for(int i = 0; i < 3; i++) {
-            cuda_gaussian_filter_thread_1D<<<grid_size_sync, block_size>>>(img_input_cuda, img_output_cuda, img_row, img_col, i, filter_cuda, filter_row, filter_scale, resolution);
+            cuda_gaussian_filter_thread_2D<<<grid_size_sync, block_size>>>(img_input_cuda, img_output_cuda, img_row, img_col, i, filter_cuda, filter_row, filter_scale, resolution);
         }
         cuda_err_chk(cudaMemcpy(img_output, img_output_cuda, resolution * sizeof(unsigned char), cudaMemcpyDeviceToHost), cudaError_cnt++);
     }
-    // cuda_err_chk(cudaDeviceSynchronize(), cudaError_cnt++);
+    cuda_err_chk(cudaDeviceSynchronize(), cudaError_cnt++);
 
     gettimeofday(&end, 0);
     int sec = end.tv_sec - start.tv_sec;

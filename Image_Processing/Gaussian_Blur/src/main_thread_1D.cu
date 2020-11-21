@@ -130,7 +130,7 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
         }
         cuda_err_chk(cudaMemcpy(img_output, img_output_cuda, resolution * sizeof(unsigned char), cudaMemcpyDeviceToHost), cudaError_cnt++);
     }
-    // cuda_err_chk(cudaDeviceSynchronize(), cudaError_cnt++);
+    cuda_err_chk(cudaDeviceSynchronize(), cudaError_cnt++);
 
     gettimeofday(&end, 0);
     int sec = end.tv_sec - start.tv_sec;
