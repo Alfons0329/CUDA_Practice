@@ -1,5 +1,4 @@
 #include "../utils/img_io.cpp"
-
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <bits/stdc++.h>
@@ -15,6 +14,9 @@
 
 using namespace std;
 
+// CUDA Stream
+#define N_STREAMS 8
+
 // Gaussian filter
 int filter_size;
 unsigned int filter_scale, filter_row;
@@ -27,6 +29,113 @@ unsigned char *img_output;
 // Global data
 int thread_cnt, block_row;
 string img_name;
+
+// Kernel, 1D dim and grid configuration version
+__global__ void cuda_gaussian_filter_block_1D(unsigned char* img_input_cuda, unsigned char* img_output_cuda,int img_col, int img_row, int shift, unsigned int* filter_cuda, int filter_row, unsigned int filter_scale, int img_border){
+    int cuda_offset = blockIdx.x * blockDim.x + threadIdx.x;
+    int cuda_row = cuda_offset / img_row;
+    int cuda_col = cuda_offset % img_col;
+    // printf("co %d cr %d cc %d \n", cuda_offset, cuda_row, cuda_col);
+    
+    unsigned int tmp = 0;
+    int target = 0;
+    int a, b;
+    
+    if (3 * (cuda_row * img_col + cuda_col) + shift >= img_border){
+        return;
+    }
+    
+    for(int j = 0; j < filter_row; j++){
+        for(int i = 0; i < filter_row; i++){
+            a = cuda_col + i - (filter_row / 2);
+            b = cuda_row + j - (filter_row / 2);
+            
+            target = 3 * (b * img_col + a) + shift;
+            if (target >= img_border || target < 0){
+                continue;
+            }
+            
+			tmp += filter_cuda[j * filter_row + i] * img_input_cuda[target];  
+        }
+    }
+    tmp /= filter_scale;
+    
+    if(tmp > 255){
+        tmp = 255;
+    }
+    
+    img_output_cuda[3 * (cuda_row * img_col + cuda_col) + shift] = tmp;
+}
+
+int cuda_run(const int& async){
+    /*-------------- CUDA init ------------*/
+    int num = 0;
+    cudaGetDeviceCount(&num);
+    cudaDeviceProp prop;
+    if(num > 0){
+        cudaGetDeviceProperties(&prop, 0);
+        printf("Device: %s \n", prop.name.c_str());
+    }
+    else{
+        fprintf(stderr, "%s", "No NVIDIA GPU detected!\n");
+        return 1;
+    }
+
+    // Init CUDA streams
+    cudaStream_t streams[N_STREAMS];
+    for (int i = 0; i < N_STREAMS; i++) {
+        cudaStreamCreate(&streams[i]);
+    }
+    int offset = 0;
+    int chunk_size = resolution / N_STREAMS;
+    
+    unsigned char* img_input_cuda;
+    unsigned char* img_output_cuda;
+    unsigned int* filter_cuda;
+    cuda_err_chk(cudaMalloc((void**) &img_input_cuda, resolution * sizeof(unsigned char)), cudaError_cnt++);
+    cuda_err_chk(cudaMalloc((void**) &img_output_cuda, resolution * sizeof(unsigned char)), cudaError_cnt++);
+    cuda_err_chk(cudaMalloc((void**) &filter_cuda, filter_size * sizeof(unsigned int)), cudaError_cnt++);
+    
+    // Copy memory from host to GPU
+    cuda_err_chk(cudaMemcpy(filter_cuda, filter, filter_size * sizeof(unsigned int), cudaMemcpyHostToDevice), cudaError_cnt++); 
+    
+    // Thread configurations
+    const dim3 block_size(thread_cnt);
+    const dim3 grid_size((resolution / N_STREAMS + thread_cnt - 1) / thread_cnt);
+    
+    if(async){
+        /*-------------- CUDA run async ------------*/
+        // R G B channel respectively
+        struct timeval start, end; 
+        gettimeofday(&start, 0);
+        for(int j = 0; j < N_STREAMS; j++){
+            offset = chunk_size * j;
+            
+            cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
+            cuda_err_chk(cudaMemcpyAsync(img_output_cuda + offset, img_output + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
+            
+            for(int i = 0; i < 3; i++) {
+                cuda_gaussian_filter_block_1D<<<grid_size, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_col, img_row, i, filter_cuda, filter_row, filter_scale, chunk_size); 
+            }
+            
+            cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
+        }
+    
+        // cuda_err_chk(cudaDeviceSynchronize(), cudaError_cnt++);
+    }
+    else{
+        
+    }
+    gettimeofday(&end, 0);
+    int sec = end.tv_sec - start.tv_sec;
+    int usec = end.tv_usec - start.tv_usec;
+    int t_gpu = sec * 1000 + (usec / 1000);
+    printf(ANSI_COLOR_RED "GPU time (ms): %d " ANSI_COLOR_RESET "\n", t_gpu);
+    img_write(img_name, img_input, img_row, img_col, 1);
+    
+    return t_gpu;
+}
+
 
 int main(int argc, char* argv[]){
     /*--------------- Init -------------------*/
@@ -45,11 +154,28 @@ int main(int argc, char* argv[]){
     block_row = (int)sqrt(thread_cnt);
 
     /*---------------- Image and mask IO ----*/
-    int img_row, img_col;
+    int img_row, img_col, resolution;
     img_name = argv[1];
     img_input = img_read(img_name, img_row, img_col);
+    resolution = img_row * img_col;
 
-    img_write(img_name, img_input, img_row, img_col, 1);
+    FILE* mask;
+    mask = fopen("mask_Gaussian.txt", "r");
+    fscanf(mask, "%d", &filter_size);
+    filter_row = (int)sqrt(filter_size);
+    filter = new unsigned int [filter_size];
+
+    for(int i = 0; i < filter_size; i++){
+        fscanf(mask, "%u", &filter[i]);
+    }
+
+    filter_scale = 0;
+    for(int i = 0; i < filter_size; i++){
+        filter_scale += filter[i];	
+    }
+    fclose(mask);
+
+    
     printf("Finished all \n");
     return 0;
 }
