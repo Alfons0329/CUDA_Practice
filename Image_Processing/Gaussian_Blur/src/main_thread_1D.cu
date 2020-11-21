@@ -1,4 +1,4 @@
-#include <../utils/img_io.cpp>
+#include "../utils/img_io.cpp"
 
 #include <cuda.h>
 #include <cuda_runtime.h>
@@ -21,7 +21,8 @@ unsigned int filter_scale, filter_row;
 unsigned int *filter;
 
 // Image IO
-unsigned char *img_input, *img_output;
+unsigned char *img_input;
+unsigned char *img_output;
 
 // Global data
 int thread_cnt, block_row;
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]){
     }
     else if(argc == 3){
         sscanf(argv[2], "%d", &thread_cnt);        
-        printf("Testing with %d threads in each CUDA block, thread dim in %d dimension\n", thread_cnt, block_2D + 1);
+        printf("Testing with %d threads in each CUDA block\n", thread_cnt);
     }
     else{
         // Set default thread count to 1024
@@ -48,7 +49,7 @@ int main(int argc, char* argv[]){
     img_name = argv[1];
     img_input = img_read(img_name, img_row, img_col);
 
-    img_write(img_name, img_input, img_orw, img_col);
-
+    img_write(img_name, img_input, img_row, img_col, 1);
+    printf("Finished all \n");
     return 0;
 }

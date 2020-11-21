@@ -27,6 +27,18 @@ __global__ void mul_cuda(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* 
     }
 }
 
+__global__ void mul_cuda_dim_1D(int row_A, int col_A, int col_B, int* mat_A_CUDA, int* mat_B_CUDA, int* mat_C_CUDA){
+    int offset = blockIdx.x * blockDim.x + threadIdx.x;
+    int row = offset / row_A;
+    int col = offset % col_B;
+
+    if(row < row_A && col < col_B && row >= 0 && col >= 0){
+        for(int k = 0; k < col_A; k++){
+            mat_C_CUDA[row * col_B + col] += mat_A_CUDA[row * col_A + k] * mat_B_CUDA[k * col_B + col];
+        }        
+    }
+}
+
 int* init(int row, int col, bool is_C){
     int* mat = (int *)malloc(row * col * sizeof(int ));
 
@@ -116,13 +128,15 @@ int main(int argc, char* argv[]){
     }
 
     const int THREAD_SQRT = (int)sqrt(atoi(argv[4]));
-    // const int THREAD_SQRT = 16;
-    const dim3 dimBlock(THREAD_SQRT, THREAD_SQRT);
-    const dim3 dimGrid((col_B + THREAD_SQRT - 1) / THREAD_SQRT, (row_A + THREAD_SQRT - 1) / THREAD_SQRT); // ceiling
+    // const dim3 dimBlock(THREAD_SQRT, THREAD_SQRT);
+    // const dim3 dimGrid((col_B + THREAD_SQRT - 1) / THREAD_SQRT, (row_A + THREAD_SQRT - 1) / THREAD_SQRT); // ceiling
+
+    const dim3 dimBlock(THREAD_SQRT * THREAD_SQRT);
+    const dim3 dimGrid((col_B * row_A + THREAD_SQRT * THREAD_SQRT - 1) / (THREAD_SQRT * THREAD_SQRT));
 
     /*-------------- CUDA run -------------*/
     gettimeofday(&start, 0);
-    mul_cuda<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA, mat_B_CUDA, mat_C_CUDA);
+    mul_cuda_dim_1D<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA, mat_B_CUDA, mat_C_CUDA);
     cudaError_t ce_K; // cuda error for kernel
     ce_K = cudaDeviceSynchronize();
     if(ce_K != cudaSuccess){
@@ -182,7 +196,7 @@ int main(int argc, char* argv[]){
 
     /*-------------- CUDA run, pinned mem -*/ 
     gettimeofday(&start, 0);
-    mul_cuda<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA_pinned, mat_B_CUDA_pinned, mat_C_CUDA_pinned);
+    mul_cuda_dim_1D<<<dimGrid, dimBlock>>>(row_A, col_A, col_B, mat_A_CUDA_pinned, mat_B_CUDA_pinned, mat_C_CUDA_pinned);
     ce_K = cudaDeviceSynchronize();
     if(ce_K != cudaSuccess){
         fprintf(stderr, "%s", "cudaDeviceSynchronize, pinned memory failed\n");
