@@ -1,0 +1,202 @@
+Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
+Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
+Collecting data...
+Collecting data...
+Processing events...
+Processing events...
+Capturing symbol files...
+Capturing symbol files...
+Saving temporary "/tmp/nsys-report-8154-26bd-5dd1-9b0f.qdstrm" file to disk...
+Saving temporary "/tmp/nsys-report-8154-26bd-5dd1-9b0f.qdstrm" file to disk...
+Creating final output files...
+Creating final output files...
+
+Processing [0%                                                                ]
+Processing [0%                                                                ]Processing [========17%                                                       ]Processing [========17%                                                       ]Processing [====================35%                                           ]Processing [====================35%                                           ]Processing [====================36%                                           ]Processing [====================36%                                           ]Processing [=====================37%                                          ]Processing [=====================37%                                          ]Processing [============================================================96%   ]Processing [============================================================96%   ]Processing [==============================================================100%]
+Processing [==============================================================100%]
+Saved report file to "/tmp/nsys-report-8154-26bd-5dd1-9b0f.qdrep"
+Saved report file to "/tmp/nsys-report-8154-26bd-5dd1-9b0f.qdrep"
+Exporting 1792 events: [1%                                                    ]Exporting 1792 events: [2%                                                    ]Exporting 1792 events: [3%                                                    ]Exporting 1792 events: [1%                                                    ]Exporting 1792 events: [2%                                                    ]Exporting 1792 events: [3%                                                    ]Exporting 1792 events: Exporting 1792 events: [4%                                                    ]Exporting 1792 events: [5%                                                    ]Exporting 1792 events: [4%                                                    ]Exporting 1792 events: [5%                                                    ]Exporting 1792 events: [=6%                                                   ]Exporting 1792 events: [=6%                                                   ]Exporting 1792 events: [=7%                                                   ]Exporting 1792 events: [=7%                                                   ]Exporting 1792 events: [==8%                                                  ][==8%                                                  ]Exporting 1792 events: Exporting 1792 events: [==9%                                                  ]Exporting 1792 events: [==10%                                                 ][==9%                                                  ]Exporting 1792 events: [==10%                                                 ]Exporting 1792 events: [==11%                                                 ]Exporting 1792 events: [==11%                                                 ]Exporting 1792 events: Exporting 1792 events: [===12%                                                ]Exporting 1792 events: [===12%                                                ]Exporting 1792 events: [====13%                                               ]Exporting 1792 events: [[====13%                                               ]Exporting 1792 events: [====14%                                               ]Exporting 1792 events: [====14%                                               ]Exporting 1792 events: [=====15%                                              ]Exporting 1792 events: [=====16%                                              ]Exporting 1792 events: [======17%                                             ]=====15%                                              ]Exporting 1792 events: [=====16%                                              ]Exporting 1792 events: [======17%                                             ]Exporting 1792 events: Exporting 1792 events: [======18%                                             ][======18%                                             ]Exporting 1792 events: Exporting 1792 events: [=======19%                                            ][=======19%                                            ]Exporting 1792 events: Exporting 1792 events: [=======20%                                            ][=======20%                                            ]Exporting 1792 events: Exporting 1792 events: [========21%                                           ][========21%                                           ]Exporting 1792 events: Exporting 1792 events: [========22%                                           ][========22%                                           ]Exporting 1792 events: Exporting 1792 events: [=========23%                                          ][=========23%                                          ]Exporting 1792 events: Exporting 1792 events: [=========24%                                          ][=========24%                                          ]Exporting 1792 events: Exporting 1792 events: [==========25%                                         ][==========25%                                         ]Exporting 1792 events: Exporting 1792 events: [===========26%                                        ][===========26%                                        ]Exporting 1792 events: Exporting 1792 events: [===========27%                                        ][===========27%                                        ]Exporting 1792 events: Exporting 1792 events: [============28%                                       ][============28%                                       ]Exporting 1792 events: Exporting 1792 events: [============29%                                       ][============29%                                       ]Exporting 1792 events: Exporting 1792 events: [=============30%                                      ][=============30%                                      ]Exporting 1792 events: Exporting 1792 events: [=============31%                                      ][=============31%                                      ]Exporting 1792 events: [Exporting 1792 events: [==============32%                                     ]==============32%                                     ]Exporting 1792 events: Exporting 1792 events: [==============33%                                     ][==============33%                                     ]Exporting 1792 events: Exporting 1792 events: [===============34%                                    ][===============34%                                    ]Exporting 1792 events: Exporting 1792 events: [===============35%                                    ][===============35%                                    ]Exporting 1792 events: Exporting 1792 events: [================36%                                   ][================36%                                   ]Exporting 1792 events: Exporting 1792 events: [================37%                                   ][================37%                                   ]Exporting 1792 events: Exporting 1792 events: [=================38%                                  ][=================38%                                  ]Exporting 1792 events: Exporting 1792 events: [==================39%                                 ][==================39%                                 ]Exporting 1792 events: Exporting 1792 events: [==================40%                                 ][==================40%                                 ]Exporting 1792 events: Exporting 1792 events: [===================41%                                ][===================41%                                ]Exporting 1792 events: Exporting 1792 events: [===================42%                                ][===================42%                                ]Exporting 1792 events: Exporting 1792 events: [====================43%                               ][====================43%                               ]Exporting 1792 events: Exporting 1792 events: [====================44%                               ][====================44%                               ]Exporting 1792 events: Exporting 1792 events: [=====================45%                              ][=====================45%                              ]Exporting 1792 events: Exporting 1792 events: [=====================46%                              ][=====================46%                              ]Exporting 1792 events: Exporting 1792 events: [======================47%                             ][======================47%                             ]Exporting 1792 events: Exporting 1792 events: [======================48%                             ][======================48%                             ]Exporting 1792 events: Exporting 1792 events: [=======================49%                            ][=======================49%                            ]Exporting 1792 events: Exporting 1792 events: [========================50%                           ][========================50%                           ]Exporting 1792 events: Exporting 1792 events: [========================51%                           ][========================51%                           ]Exporting 1792 events: Exporting 1792 events: [=========================52%                          ][=========================52%                          ]Exporting 1792 events: Exporting 1792 events: [=========================53%                          ][=========================53%                          ]Exporting 1792 events: Exporting 1792 events: [==========================54%                         ][==========================54%                         ]Exporting 1792 events: Exporting 1792 events: [==========================55%                         ][==========================55%                         ]Exporting 1792 events: Exporting 1792 events: [===========================56%                        ][===========================56%                        ]Exporting 1792 events: Exporting 1792 events: [===========================57%                        ][===========================57%                        ]Exporting 1792 events: Exporting 1792 events: [============================58%                       ][============================58%                       ]Exporting 1792 events: Exporting 1792 events: [============================59%                       ][============================59%                       ]Exporting 1792 events: Exporting 1792 events: [=============================60%                      ][=============================60%                      ]Exporting 1792 events: Exporting 1792 events: [=============================61%                      ][=============================61%                      ]Exporting 1792 events: Exporting 1792 events: [==============================62%                     ][==============================62%                     ]Exporting 1792 events: Exporting 1792 events: [===============================63%                    ][===============================63%                    ]Exporting 1792 events: Exporting 1792 events: [===============================64%                    ][===============================64%                    ]Exporting 1792 events: Exporting 1792 events: [================================65%                   ][================================65%                   ]Exporting 1792 events: Exporting 1792 events: [================================66%                   ][================================66%                   ]Exporting 1792 events: Exporting 1792 events: [=================================67%                  ][=================================67%                  ]Exporting 1792 events: Exporting 1792 events: [=================================68%                  ][=================================68%                  ]Exporting 1792 events: Exporting 1792 events: [==================================69%                 ][==================================69%                 ]Exporting 1792 events: Exporting 1792 events: [==================================70%                 ][==================================70%                 ]Exporting 1792 events: Exporting 1792 events: [===================================71%                ][===================================71%                ]Exporting 1792 events: Exporting 1792 events: [===================================72%                ][===================================72%                ]Exporting 1792 events: Exporting 1792 events: [====================================73%               ][====================================73%               ]Exporting 1792 events: Exporting 1792 events: [====================================74%               ][====================================74%               ]Exporting 1792 events: Exporting 1792 events: [=====================================75%              ][=====================================75%              ]Exporting 1792 events: Exporting 1792 events: [======================================76%             ][======================================76%             ]Exporting 1792 events: Exporting 1792 events: [======================================77%             ][======================================77%             ]Exporting 1792 events: Exporting 1792 events: [=======================================78%            ][=======================================78%            ]Exporting 1792 events: Exporting 1792 events: [=======================================79%            ][=======================================79%            ]Exporting 1792 events: Exporting 1792 events: [========================================80%           ][========================================80%           ]Exporting 1792 events: Exporting 1792 events: [========================================81%           ][========================================81%           ]Exporting 1792 events: Exporting 1792 events: [=========================================82%          ][=========================================82%          ]Exporting 1792 events: Exporting 1792 events: [=========================================83%          ][=========================================83%          ]Exporting 1792 events: Exporting 1792 events: [==========================================84%         ][==========================================84%         ]Exporting 1792 events: Exporting 1792 events: [==========================================85%         ][==========================================85%         ]Exporting 1792 events: Exporting 1792 events: [===========================================86%        ][===========================================86%        ]Exporting 1792 events: Exporting 1792 events: [===========================================87%        ][===========================================87%        ]Exporting 1792 events: Exporting 1792 events: [============================================88%       ][============================================88%       ]Exporting 1792 events: Exporting 1792 events: [=============================================89%      ][=============================================89%      ]Exporting 1792 events: Exporting 1792 events: [=============================================90%      ][=============================================90%      ]Exporting 1792 events: Exporting 1792 events: [==============================================91%     ][==============================================91%     ]Exporting 1792 events: Exporting 1792 events: [==============================================92%     ][==============================================92%     ]Exporting 1792 events: Exporting 1792 events: [===============================================93%    ][===============================================93%    ]Exporting 1792 events: Exporting 1792 events: [===============================================94%    ][===============================================94%    ]Exporting 1792 events: Exporting 1792 events: [================================================95%   ][================================================95%   ]Exporting 1792 events: Exporting 1792 events: [================================================96%   ][================================================96%   ]Exporting 1792 events: Exporting 1792 events: [=================================================97%  ][=================================================97%  ]Exporting 1792 events: Exporting 1792 events: [=================================================98%  ][=================================================98%  ]Exporting 1792 events: Exporting 1792 events: [==================================================99% ][==================================================99% ]Exporting 1792 events: Exporting 1792 events: [==================================================100%][==================================================100%]
+
+
+Exported successfully to
+/tmp/nsys-report-8154-26bd-5dd1-9b0f.sqlite
+
+Exported successfully to
+/tmp/nsys-report-8154-26bd-5dd1-9b0f.sqlite
+
+Generating CUDA API Statistics...
+CUDA API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   76.0       161582008           2      80791004.0        15152986       146429022  cudaHostAlloc                                                                   
+    8.3        17655719           2       8827859.5         7571055        10084664  cudaMemcpy                                                                      
+    8.1        17187438           2       8593719.0         7290965         9896473  cudaFreeHost                                                                    
+    7.1        15013300           2       7506650.0          459739        14553561  cudaDeviceSynchronize                                                           
+    0.1          296501           2        148250.5          114534          181967  cudaMalloc                                                                      
+    0.1          245957          48          5124.1            2764           27175  cudaMemcpyAsync                                                                 
+    0.1          237002          25          9480.1            4168           33500  cudaLaunchKernel                                                                
+    0.1          222106           2        111053.0           94512          127594  cudaFree                                                                        
+    0.1          197194          24          8216.4             832          157613  cudaStreamCreate                                                                
+    0.0           35197          10          3519.7            1251           15431  cudaEventRecord                                                                 
+    0.0           26007           5          5201.4            4080            6732  cudaEventSynchronize                                                            
+    0.0           14980           2          7490.0             503           14477  cudaEventCreate                                                                 
+
+
+
+
+Generating CUDA API Statistics...
+CUDA API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   76.0       161582008           2      80791004.0        15152986       146429022  cudaHostAlloc                                                                   
+    8.3        17655719           2       8827859.5         7571055        10084664  cudaMemcpy                                                                      
+    8.1        17187438           2       8593719.0         7290965         9896473  cudaFreeHost                                                                    
+    7.1        15013300           2       7506650.0          459739        14553561  cudaDeviceSynchronize                                                           
+    0.1          296501           2        148250.5          114534          181967  cudaMalloc                                                                      
+    0.1          245957          48          5124.1            2764           27175  cudaMemcpyAsync                                                                 
+    0.1          237002          25          9480.1            4168           33500  cudaLaunchKernel                                                                
+    0.1          222106           2        111053.0           94512          127594  cudaFree                                                                        
+    0.1          197194          24          8216.4             832          157613  cudaStreamCreate                                                                
+    0.0           35197          10          3519.7            1251           15431  cudaEventRecord                                                                 
+    0.0           26007           5          5201.4            4080            6732  cudaEventSynchronize                                                            
+    0.0           14980           2          7490.0             503           14477  cudaEventCreate                                                                 
+
+
+
+
+Generating CUDA Kernel Statistics...
+CUDA Kernel Statistics (nanoseconds)
+
+Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name                                                                                                                                                                                                                                                                                                                                         
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                         
+  100.0         1167139          25         46685.6           29248          457440  convertPixelFormat(unsigned char*, unsigned char*, int)                                                                                                                                                                                                                                                                                      
+
+
+
+Generating CUDA Memory Operation Statistics...
+CUDA Memory Operation Statistics (nanoseconds)
+
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   55.7        24759623          25        990384.9          575968        10064388  [CUDA memcpy HtoD]                                                              
+   44.3        19691335          25        787653.4          316353         7557347  [CUDA memcpy DtoH]                                                              
+
+
+CUDA Memory Operation Statistics (KiB)
+
+              Total      Operations              Average            Minimum              Maximum  Name                                                                            
+-------------------  --------------  -------------------  -----------------  -------------------  --------------------------------------------------------------------------------
+         259200.000              25            10368.000           5400.000           129600.000  [CUDA memcpy HtoD]                                                              
+         194400.000              25             7776.000           4050.000            97200.000  [CUDA memcpy DtoH]                                                              
+
+
+
+
+Generating CUDA Kernel Statistics...
+CUDA Kernel Statistics (nanoseconds)
+
+Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name                                                                                                                                                                                                                                                                                                                                         
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                         
+  100.0         1167139          25         46685.6           29248          457440  convertPixelFormat(unsigned char*, unsigned char*, int)                                                                                                                                                                                                                                                                                      
+
+
+
+Generating CUDA Memory Operation Statistics...
+CUDA Memory Operation Statistics (nanoseconds)
+
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   55.7        24759623          25        990384.9          575968        10064388  [CUDA memcpy HtoD]                                                              
+   44.3        19691335          25        787653.4          316353         7557347  [CUDA memcpy DtoH]                                                              
+
+
+CUDA Memory Operation Statistics (KiB)
+
+              Total      Operations              Average            Minimum              Maximum  Name                                                                            
+-------------------  --------------  -------------------  -----------------  -------------------  --------------------------------------------------------------------------------
+         259200.000              25            10368.000           5400.000           129600.000  [CUDA memcpy HtoD]                                                              
+         194400.000              25             7776.000           4050.000            97200.000  [CUDA memcpy DtoH]                                                              
+
+
+
+
+Generating Operating System Runtime API Statistics...
+Operating System Runtime API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   33.4      3570370133          50      71407402.7            9680       100087300  sem_timedwait                                                                   
+   32.8      3505256723          50      70105134.5           11969       100138238  poll                                                                            
+   32.8      3500555951           7     500079421.6       500070868       500084496  pthread_cond_timedwait                                                          
+    0.9        94563260         808        117033.7            1019        19416580  ioctl                                                                           
+    0.1        15956494          99        161176.7            1155         8178135  mmap                                                                            
+    0.0          602529          97          6211.6            2840           14266  open64                                                                          
+    0.0          389736          24         16239.0            1005          323901  fopen                                                                           
+    0.0          108890           5         21778.0           16198           31387  pthread_create                                                                  
+    0.0           97116           3         32372.0           30744           34883  fgets                                                                           
+    0.0           67886          25          2715.4            1186           15902  putc                                                                            
+    0.0           32810          13          2523.8            1206            4254  munmap                                                                          
+    0.0           30723          13          2363.3            1029            4214  write                                                                           
+    0.0           21714           5          4342.8            2443            5725  open                                                                            
+    0.0            9849           7          1407.0            1010            2002  fclose                                                                          
+    0.0            8297           4          2074.2            1603            2846  fread                                                                           
+    0.0            6393           2          3196.5            2787            3606  socket                                                                          
+    0.0            4545           1          4545.0            4545            4545  connect                                                                         
+    0.0            3943           3          1314.3            1037            1830  read                                                                            
+    0.0            3836           1          3836.0            3836            3836  pipe2                                                                           
+    0.0            3693           2          1846.5            1054            2639  fwrite                                                                          
+    0.0            2224           1          2224.0            2224            2224  fcntl                                                                           
+
+
+
+
+Generating Operating System Runtime API Statistics...
+Operating System Runtime API Statistics (nanoseconds)
+
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------------------------------------------------------
+   33.4      3570370133          50      71407402.7            9680       100087300  sem_timedwait                                                                   
+   32.8      3505256723          50      70105134.5           11969       100138238  poll                                                                            
+   32.8      3500555951           7     500079421.6       500070868       500084496  pthread_cond_timedwait                                                          
+    0.9        94563260         808        117033.7            1019        19416580  ioctl                                                                           
+    0.1        15956494          99        161176.7            1155         8178135  mmap                                                                            
+    0.0          602529          97          6211.6            2840           14266  open64                                                                          
+    0.0          389736          24         16239.0            1005          323901  fopen                                                                           
+    0.0          108890           5         21778.0           16198           31387  pthread_create                                                                  
+    0.0           97116           3         32372.0           30744           34883  fgets                                                                           
+    0.0           67886          25          2715.4            1186           15902  putc                                                                            
+    0.0           32810          13          2523.8            1206            4254  munmap                                                                          
+    0.0           30723          13          2363.3            1029            4214  write                                                                           
+    0.0           21714           5          4342.8            2443            5725  open                                                                            
+    0.0            9849           7          1407.0            1010            2002  fclose                                                                          
+    0.0            8297           4          2074.2            1603            2846  fread                                                                           
+    0.0            6393           2          3196.5            2787            3606  socket                                                                          
+    0.0            4545           1          4545.0            4545            4545  connect                                                                         
+    0.0            3943           3          1314.3            1037            1830  read                                                                            
+    0.0            3836           1          3836.0            3836            3836  pipe2                                                                           
+    0.0            3693           2          1846.5            1054            2639  fwrite                                                                          
+    0.0            2224           1          2224.0            2224            2224  fcntl                                                                           
+
+
+
+
+Generating NVTX Push-Pop Range Statistics...
+NVTX Push-Pop Range Statistics (nanoseconds)
+
+
+
+
+
+Generating NVTX Push-Pop Range Statistics...
+NVTX Push-Pop Range Statistics (nanoseconds)
+
+
+
+
+Report file moved to "/home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/CUStream/profile_test.qdrep"
+Report file moved to "/home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/CUStream/profile_test.qdrep"
+Report file moved to "/home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/CUStream/profile_test.sqlite"
+Report file moved to "/home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/CUStream/profile_test.sqlite"
