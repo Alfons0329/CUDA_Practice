@@ -5,7 +5,7 @@ set -xe
 tune_streams(){
     printf "Thread dim config in %dD \n" $1
     printf "Thread dim config in %dD \n" $1 >> res.csv
-    for streams in 2 4 8 10 20
+    for streams in 2 4 8 10 20 40 80 120 240
     do
         sed -i "18s/#define.*/#define\ N_STREAMS\ $streams/" main_thread_$1D.cu
         mkdir -p ../report/profiling/$streams\_streams/
