@@ -1,10 +1,11 @@
 #!/bin/bash
-set -xe
+set -e
 
 tune_streams(){
     for img in ../img_input/*jpg
     do
         fname=$(basename $img)
+        fname=$(echo "${fname%%.*}")
         > res_$fname.csv
         printf "Process %s, fname %s \n" $img $fname
         printf "Thread dim config in %dD \n" $1
@@ -15,7 +16,7 @@ tune_streams(){
             mkdir -p ../report/profiling/$streams\_streams/
             make cuda_$1D -j16
             nsys profile -o ../report/profiling/$streams\_streams/nsys_data_$1D --stats true --force-overwrite true ./src/gb_$1D.o $img 2>  ../report/profiling/$streams\_streams/stat_data_$1D.txt
-            ./gb_$1D.o $img | tail -n 1 >> res.csv
+            ./gb_$1D.o $img | tail -n 1 >> res_$fname.csv
             mv *jpg ../img_output/
         done
     done
