@@ -41,6 +41,7 @@ void cuda_err_chk(const cudaError_t& e, const int& cudaError_cnt){
 
 // Kernel, 1D dim and grid configuration version
 __global__ void cuda_gaussian_filter_thread_2D(unsigned char* img_input_cuda, unsigned char* img_output_cuda, int img_row, int img_col, int shift, unsigned int* filter_cuda, int filter_row, unsigned int filter_scale, int img_border){
+
     int cuda_col = blockIdx.x * blockDim.x + threadIdx.x;
     int cuda_row = blockIdx.y * blockDim.y + threadIdx.y;
     // printf("co %d cr %d cc %d \n", cuda_offset, cuda_row, cuda_col);
@@ -210,8 +211,8 @@ int main(int argc, char* argv[]){
     
     printf(ANSI_COLOR_YELLOW "[RESULT]: [img_row, img_col, threads in each block]" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_YELLOW "[RESULT]: [stream workers, speedup ratio]" ANSI_COLOR_RESET "\n");
-    printf("%d, %d, %d" ANSI_COLOR_RESET "\n", img_row, img_col, thread_cnt);
-    printf("%d, %5.2f" ANSI_COLOR_RESET "\n", N_STREAMS, ((float) t1 / (float)t2));
+    printf("%d, %d, %d\n", img_row, img_col, thread_cnt);
+    printf("%d, %.2f\n", N_STREAMS, ((float) t1 / (float)t2));
     
     /*-------------- Cleanup ------------*/
     free_memory();

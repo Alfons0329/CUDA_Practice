@@ -1,0 +1,20 @@
+Thread dim config in 1D 
+[LOG]: Device: TITAN V 
+
+
+
+
+
+
+
+
+Thread dim config in 2D 
+2, 1.00
+4, 1.00
+8, 1.00
+10, 1.00
+20, 1.01
+40, 1.02
+80, 1.06
+120, 1.10
+240, 1.24

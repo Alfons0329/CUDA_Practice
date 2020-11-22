@@ -6,7 +6,6 @@ tune_streams(){
     do
         fname=$(basename $img)
         fname=$(echo "${fname%%.*}")
-        > res_$fname.csv
         printf "Process %s, fname %s \n" $img $fname
         printf "Thread dim config in %dD \n" $1
         printf "Thread dim config in %dD \n" $1 >> res_$fname.csv
@@ -26,6 +25,6 @@ tune_streams(){
     done
 }
 
-
+rm -f ./res_*csv
 tune_streams 1
 tune_streams 2
