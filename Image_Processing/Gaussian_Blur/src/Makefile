@@ -16,7 +16,7 @@ NVCC=nvcc
 PTHREAD_LIBS=-pthread 
 OPENCL_LIBS=-lOpenCL
 OPENCV_LIBS=`pkg-config --cflags --libs opencv`
-CXXFLAGS=-O3 -std=c++14
+CXXFLAGS= -std=c++14
 
 #---------------------------Rules-------------------------------#
 all: cuda_1D cuda_2D

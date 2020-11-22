@@ -1,2 +1,0 @@
-Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
-No such file or directory: ./src/gb_1D.o

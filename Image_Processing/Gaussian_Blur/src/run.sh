@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 tune_streams(){
     for img in ../img_input/*jpg
@@ -15,8 +15,12 @@ tune_streams(){
             sed -i "18s/#define.*/#define\ N_STREAMS\ $streams/" main_thread_$1D.cu
             mkdir -p ../report/profiling/$streams\_streams/
             make cuda_$1D -j16
-            nsys profile -o ../report/profiling/$streams\_streams/nsys_data_$1D --stats true --force-overwrite true ./src/gb_$1D.o $img 2>  ../report/profiling/$streams\_streams/stat_data_$1D.txt
+            nsys profile -o ../report/profiling/$streams\_streams/nsys_data_$1D_$fname --stats true --force-overwrite true ./src/gb_$1D.o $img 2>  ../report/profiling/$streams\_streams/stat_data_$1D_$fname.txt
             ./gb_$1D.o $img | tail -n 1 >> res_$fname.csv
+            if [ $? -ne 0 ]
+            then
+                print "Program crashed with input image: %s " $img >> res_$fname.csv
+            fi
             mv *jpg ../img_output/
         done
     done
@@ -25,4 +29,3 @@ tune_streams(){
 
 tune_streams 1
 tune_streams 2
-
