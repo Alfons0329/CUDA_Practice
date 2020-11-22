@@ -1,0 +1,93 @@
+==31941== Memcheck, a memory error detector
+==31941== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==31941== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==31941== Command: ./gb_2D.o ../img_input/20K.jpg
+==31941== 
+==31941== Warning: noted but unhandled ioctl 0x30000001 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x27 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x25 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x17 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: set address range perms: large range [0x200000000, 0x300200000) (noaccess)
+==31941== Warning: set address range perms: large range [0x1ecc9000, 0x3ecc8000) (noaccess)
+==31941== Warning: set address range perms: large range [0x59e43040, 0xa16abc58) (undefined)
+==31941== Warning: set address range perms: large range [0xa16ac040, 0xe8f14c40) (undefined)
+==31941== Warning: set address range perms: large range [0x59e43028, 0xa16abc70) (noaccess)
+==31941== Warning: set address range perms: large range [0x59e43040, 0xa16abc40) (undefined)
+==31941== Warning: noted but unhandled ioctl 0x19 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x49 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x21 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x1b with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x44 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: noted but unhandled ioctl 0x48 with no size/direction hints.
+==31941==    This could cause spurious value errors to appear.
+==31941==    See README_MISSING_SYSCALL_OR_IOCTL for guidance on writing a proper wrapper.
+==31941== Warning: set address range perms: large range [0x38000000, 0x49fff000) (noaccess)
+==31941== Warning: set address range perms: large range [0xe8f15000, 0x132f14000) (noaccess)
+==31941== Warning: set address range perms: large range [0x132000000, 0x17bfff000) (noaccess)
+==31941== Warning: set address range perms: large range [0x17a000040, 0x1c1868c58) (undefined)
+==31941== Warning: set address range perms: large range [0x17a000028, 0x1c1868c70) (noaccess)
+==31941== Warning: set address range perms: large range [0xea000000, 0x132000000) (noaccess)
+==31941== Warning: set address range perms: large range [0xe8f15040, 0x13077dc40) (undefined)
+==31941== Warning: set address range perms: large range [0x17a000000, 0x1c3fff000) (noaccess)
+==31941== Warning: set address range perms: large range [0x300200040, 0x347a68c58) (undefined)
+==31941== Warning: set address range perms: large range [0x300200028, 0x347a68c70) (noaccess)
+==31941== Mismatched free() / delete / delete []
+==31941==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x11279F: free_memory() (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==    by 0x110A9B: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==  Address 0xa16ac040 is 0 bytes inside a block of size 1,200,000,000 alloc'd
+==31941==    at 0x4C3089F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x1113B0: img_read(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int&, int&) (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==    by 0x1108A4: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941== 
+==31941== Warning: set address range perms: large range [0xa16ac028, 0xe8f14c58) (noaccess)
+==31941== Mismatched free() / delete / delete []
+==31941==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x1127AB: free_memory() (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==    by 0x110A9B: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==  Address 0xe8f15040 is 0 bytes inside a block of size 1,200,000,000 alloc'd
+==31941==    at 0x4C3089F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x111C61: cuda_run(int const&, int const&, int const&, int const&) (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==    by 0x110A19: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941== 
+==31941== Warning: set address range perms: large range [0xe8f15028, 0x13077dc58) (noaccess)
+==31941== Mismatched free() / delete / delete []
+==31941==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x110A9B: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941==  Address 0x1d692a70 is 0 bytes inside a block of size 161,604 alloc'd
+==31941==    at 0x4C3089F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31941==    by 0x110947: main (in /home/alfons/Desktop/programming/CUDA_Practice/Image_Processing/Gaussian_Blur/src/gb_2D.o)
+==31941== 
+==31941== 
+==31941== HEAP SUMMARY:
+==31941==     in use at exit: 1,209,688,756 bytes in 12,942 blocks
+==31941==   total heap usage: 120,022 allocs, 107,080 frees, 7,274,362,694 bytes allocated
+==31941== 
+==31941== LEAK SUMMARY:
+==31941==    definitely lost: 0 bytes in 0 blocks
+==31941==    indirectly lost: 0 bytes in 0 blocks
+==31941==      possibly lost: 1,200,022,608 bytes in 194 blocks
+==31941==    still reachable: 9,666,148 bytes in 12,748 blocks
+==31941==         suppressed: 0 bytes in 0 blocks
+==31941== Rerun with --leak-check=full to see details of leaked memory
+==31941== 
+==31941== For counts of detected and suppressed errors, rerun with: -v
+==31941== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
