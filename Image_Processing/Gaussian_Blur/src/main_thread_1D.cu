@@ -113,7 +113,6 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
             offset = chunk_size * j;
             
             cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
-            cuda_err_chk(cudaMemcpyAsync(img_output_cuda + offset, img_output + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
             
             for(int i = 0; i < 3; i++) {
                 cuda_gaussian_filter_thread_1D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 

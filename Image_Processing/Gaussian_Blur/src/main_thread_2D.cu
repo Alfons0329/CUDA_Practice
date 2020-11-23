@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 1200
+#define N_STREAMS 600
 
 // Gaussian filter
 int filter_size;
@@ -109,18 +109,38 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
     gettimeofday(&start, 0);
     if(async){
         /*-------------- CUDA run async ------------*/
+        // for(int j = 0; j < N_STREAMS; j++){
+        //     offset = chunk_size * j;
+            
+        //     cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
+            
+        //     for(int i = 0; i < 3; i++) {
+        //         cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
+        //     }
+            
+        //     cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
+        // }
+
         for(int j = 0; j < N_STREAMS; j++){
             offset = chunk_size * j;
             
             cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
-            cuda_err_chk(cudaMemcpyAsync(img_output_cuda + offset, img_output + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
+        }
+
+        for(int j = 0; j < N_STREAMS; j++){
+            offset = chunk_size * j;
             
             for(int i = 0; i < 3; i++) {
                 cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
             }
+        }
+
+        for(int j = 0; j < N_STREAMS; j++){
+            offset = chunk_size * j;
             
             cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
         }
+        
     }
     else{
         /*-------------- CUDA run sync ------------*/
