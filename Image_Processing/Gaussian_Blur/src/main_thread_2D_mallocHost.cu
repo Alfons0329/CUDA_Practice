@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 4
+#define N_STREAMS 120
 
 // Gaussian filter
 int filter_size;
@@ -161,9 +161,9 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
     unsigned char* img_CV = new unsigned char [resolution];
     for(int i = 0; i < img_row; i++){
         for(int j = 0; j < img_col; j++){
-            img_CV[i * img_col + j + 0] = img_output[i * img_col + j + 0];
-            img_CV[i * img_col + j + 1] = img_output[i * img_col + j + 1];
-            img_CV[i * img_col + j + 2] = img_output[i * img_col + j + 2];
+            img_CV[3 * (i * img_col + j) + 0] = img_output[3 * (i * img_col + j) + 0];
+            img_CV[3 * (i * img_col + j) + 1] = img_output[3 * (i * img_col + j) + 1];
+            img_CV[3 * (i * img_col + j) + 2] = img_output[3 * (i * img_col + j) + 2];
         }
     }
     img_write(img_name, img_output, img_row, img_col, 2, async);
@@ -221,9 +221,9 @@ int main(int argc, char* argv[]){
     cudaMallocHost((void**)&img_input, resolution * sizeof(unsigned char));
     for(int i = 0; i < img_row; i++){
         for(int j = 0; j < img_col; j++){
-            img_input[i * img_col + j + 0] = img_CV[i * img_col + j + 0];
-            img_input[i * img_col + j + 1] = img_CV[i * img_col + j + 1];
-            img_input[i * img_col + j + 2] = img_CV[i * img_col + j + 2];
+            img_input[3 * (i * img_col + j) + 0] = img_CV[3 * (i * img_col + j) + 0];
+            img_input[3 * (i * img_col + j) + 1] = img_CV[3 * (i * img_col + j) + 1];
+            img_input[3 * (i * img_col + j) + 2] = img_CV[3 * (i * img_col + j) + 2];
         }
     }
     free(img_CV);
