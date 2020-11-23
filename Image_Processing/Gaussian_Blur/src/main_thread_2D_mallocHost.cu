@@ -15,7 +15,7 @@
 using namespace std;
 
 // CUDA Stream
-#define N_STREAMS 600
+#define N_STREAMS 4
 
 // Gaussian filter
 int filter_size;
@@ -78,8 +78,7 @@ __global__ void cuda_gaussian_filter_thread_2D(unsigned char* img_input_cuda, un
 int cuda_run(const int& img_row, const int& img_col, const int& resolution, const int& async){
     /*-------------- CUDA init ------------*/
     // Allocate memory
-    img_output = new unsigned char[resolution];
-    memset(img_output, 0, sizeof(unsigned char) * resolution);
+    cudaMallocHost((void**)&img_output, resolution * sizeof(unsigned char));
 
     unsigned char* img_input_cuda;
     unsigned char* img_output_cuda;
@@ -109,37 +108,37 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
     gettimeofday(&start, 0);
     if(async){
         /*-------------- CUDA run async ------------*/
-        // for(int j = 0; j < N_STREAMS; j++){
-        //     offset = chunk_size * j;
-            
-        //     cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
-            
-        //     for(int i = 0; i < 3; i++) {
-        //         cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
-        //     }
-            
-        //     cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
-        // }
-
         for(int j = 0; j < N_STREAMS; j++){
             offset = chunk_size * j;
             
             cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
-        }
-
-        for(int j = 0; j < N_STREAMS; j++){
-            offset = chunk_size * j;
             
             for(int i = 0; i < 3; i++) {
                 cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
             }
-        }
-
-        for(int j = 0; j < N_STREAMS; j++){
-            offset = chunk_size * j;
             
             cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
         }
+
+        // for(int j = 0; j < N_STREAMS; j++){
+        //     offset = chunk_size * j;
+            
+        //     cuda_err_chk(cudaMemcpyAsync(img_input_cuda + offset, img_input + offset, chunk_size * sizeof(unsigned char), cudaMemcpyHostToDevice, streams[j]), cudaError_cnt++);
+        // }
+
+        // for(int j = 0; j < N_STREAMS; j++){
+        //     offset = chunk_size * j;
+            
+        //     for(int i = 0; i < 3; i++) {
+        //         cuda_gaussian_filter_thread_2D<<<grid_size_async, block_size, 0, streams[j]>>>(img_input_cuda + offset, img_output_cuda + offset, img_row, img_col, i, filter_cuda, filter_row, filter_scale, chunk_size); 
+        //     }
+        // }
+
+        // for(int j = 0; j < N_STREAMS; j++){
+        //     offset = chunk_size * j;
+            
+        //     cuda_err_chk(cudaMemcpyAsync(img_output + offset, img_output_cuda + offset, chunk_size * sizeof(unsigned char), cudaMemcpyDeviceToHost, streams[j]), cudaError_cnt++);
+        // }
         
     }
     else{
@@ -157,7 +156,18 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
     int usec = end.tv_usec - start.tv_usec;
     int t_gpu = sec * 1000 + (usec / 1000);
     printf(ANSI_COLOR_RED "GPU time (ms): %d " ANSI_COLOR_RESET "\n", t_gpu);
+    
+    // Copy image from malloc
+    unsigned char* img_CV = new unsigned char [resolution];
+    for(int i = 0; i < img_row; i++){
+        for(int j = 0; j < img_col; j++){
+            img_CV[i * img_col + j + 0] = img_output[i * img_col + j + 0];
+            img_CV[i * img_col + j + 1] = img_output[i * img_col + j + 1];
+            img_CV[i * img_col + j + 2] = img_output[i * img_col + j + 2];
+        }
+    }
     img_write(img_name, img_output, img_row, img_col, 2, async);
+    free(img_CV);
     
     cuda_err_chk(cudaFree(img_input_cuda), cudaError_cnt++);
     cuda_err_chk(cudaFree(img_output_cuda), cudaError_cnt++);
@@ -168,9 +178,9 @@ int cuda_run(const int& img_row, const int& img_col, const int& resolution, cons
 }
 
 void free_memory(){
-    free(img_input);
-    free(img_output);
-    free(filter);
+    cudaFreeHost(img_input);
+    cudaFreeHost(img_output);
+    cudaFreeHost(filter);
 }
 
 
@@ -204,16 +214,27 @@ int main(int argc, char* argv[]){
 
     /*---------------- Image and mask IO ----*/
     int img_row, img_col, resolution;
+    unsigned char* img_CV;
     img_name = argv[1];
-    img_input = img_read(img_name, img_row, img_col);
+    img_CV = img_read(img_name, img_row, img_col);
     resolution = 3 * img_row * img_col;
+    cudaMallocHost((void**)&img_input, resolution * sizeof(unsigned char));
+    for(int i = 0; i < img_row; i++){
+        for(int j = 0; j < img_col; j++){
+            img_input[i * img_col + j + 0] = img_CV[i * img_col + j + 0];
+            img_input[i * img_col + j + 1] = img_CV[i * img_col + j + 1];
+            img_input[i * img_col + j + 2] = img_CV[i * img_col + j + 2];
+        }
+    }
+    free(img_CV);
     
     FILE* mask;
     mask = fopen("mask_Gaussian.txt", "r");
     fscanf(mask, "%d", &filter_size);
     filter_row = (int)sqrt(filter_size);
-    filter = new unsigned int [filter_size];
-    
+    // filter = new int [filter_size];
+    cudaMallocHost((void**)&filter, filter_size * sizeof(int));
+
     for(int i = 0; i < filter_size; i++){
         fscanf(mask, "%u", &filter[i]);
     }

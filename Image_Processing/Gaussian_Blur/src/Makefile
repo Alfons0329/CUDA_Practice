@@ -7,6 +7,10 @@ SOURCE_1D=main_thread_1D.cu
 TARGET_2D=gb_2D.o
 SOURCE_2D=main_thread_2D.cu
 
+# Thread dim in 2D
+TARGET_2D_mallocHost=gb_2D_mallocHost.o
+SOURCE_2D_mallocHost=main_thread_2D_mallocHost.cu
+
 #------------------------Compiler and flag-----------------------#
 # Compilers
 CC=g++
@@ -19,7 +23,7 @@ OPENCV_LIBS=`pkg-config --cflags --libs opencv`
 CXXFLAGS= -O2 -std=c++14
 
 #---------------------------Rules-------------------------------#
-all: cuda_1D cuda_2D
+all: cuda_1D cuda_2D cuda_2D_mallocHost
 
 pthread: $(SOURCE_PTHREAD)
 	$(CC) $(SOURCE_PTHREAD) -o $(TARGET_PTHREAD) $(CXXFLAGS) $(PTHREAD_LIBS) $(LIBS) $(OPENCV_LIBS)
@@ -29,6 +33,10 @@ cuda_1D: $(SOURCE_1D)
 
 cuda_2D: $(SOURCE_2D)
 	$(NVCC) $(SOURCE_2D) -o $(TARGET_2D) $(CXXFLAGS) $(LIBS) $(OPENCV_LIBS)
+
+cuda_2D_mallocHost: $(SOURCE_2D)
+	$(NVCC) $(SOURCE_2D_mallocHost) -o $(TARGET_2D_mallocHost) $(CXXFLAGS) $(LIBS) $(OPENCV_LIBS)
+
 
 .PHONY: clean
 

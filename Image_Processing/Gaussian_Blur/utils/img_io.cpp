@@ -36,6 +36,10 @@ void img_write(string img_name, unsigned char* img, const int& img_row, const in
             color[1] = img[3 * (i * img_col + j) + 1];
             color[0] = img[3 * (i * img_col + j) + 2];
             img_cv.at<Vec3b>(i, j) = color;
+            if(color[2] == 0 && color[1] == 0 && color[0] == 0){
+                // printf("row %d col %d is black \n", i, j);
+                // getchar();
+            }
         }
     }
 
