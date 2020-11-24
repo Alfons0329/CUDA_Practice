@@ -1,3 +1,4 @@
+/*This version of CUDA code does use cudaMallocHost for async IO acceleration */
 #include "../utils/img_io.cpp"
 #include <cuda.h>
 #include <cuda_runtime.h>
@@ -41,10 +42,8 @@ void cuda_err_chk(const cudaError_t& e, const int& cudaError_cnt){
 
 // Kernel, 1D dim and grid configuration version
 __global__ void cuda_gaussian_filter_thread_2D(unsigned char* img_input_cuda, unsigned char* img_output_cuda, int img_row, int img_col, int shift, unsigned int* filter_cuda, int filter_row, unsigned int filter_scale, int img_border){
-
     int cuda_col = blockIdx.x * blockDim.x + threadIdx.x;
     int cuda_row = blockIdx.y * blockDim.y + threadIdx.y;
-    // printf("co %d cr %d cc %d \n", cuda_offset, cuda_row, cuda_col);
     
     unsigned int tmp = 0;
     int target = 0;
@@ -182,7 +181,6 @@ void free_memory(){
     cudaFreeHost(img_output);
     cudaFreeHost(filter);
 }
-
 
 int main(int argc, char* argv[]){
     /*--------------- Init -------------------*/
