@@ -33,8 +33,10 @@ int main()
 
   const int dataSizeBgra = 7680 * 4320 * 4;
   const int dataSizeYuv = 7680 * 4320 * 3;
-  CUDA_CALL(cudaMallocHost(&bgraBuffer, dataSizeBgra));
-  CUDA_CALL(cudaMallocHost(&yuvBuffer, dataSizeYuv));
+  // CUDA_CALL(cudaMallocHost(&bgraBuffer, dataSizeBgra));
+  // CUDA_CALL(cudaMallocHost(&yuvBuffer, dataSizeYuv));
+  bgraBuffer = new uint8_t [dataSizeBgra];
+  yuvBuffer = new uint8_t [dataSizeYuv];
   CUDA_CALL(cudaMalloc(&deviceBgraBuffer, dataSizeBgra));
   CUDA_CALL(cudaMalloc(&deviceYuvBuffer, dataSizeYuv));
 
