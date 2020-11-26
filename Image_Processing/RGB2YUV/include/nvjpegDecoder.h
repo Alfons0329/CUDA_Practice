@@ -26,13 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 #include <string.h>  // strcmpi
 #ifndef _WIN64
 #include <sys/time.h>  // timings
