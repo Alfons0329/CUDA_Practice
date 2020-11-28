@@ -1,5 +1,5 @@
 #include <cuda_runtime_api.h>
-#include "nvjpegDecoder.cpp"
+#include "nvjpegDecoder.cu"
 
 using namespace std;
 
