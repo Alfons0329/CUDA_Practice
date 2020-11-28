@@ -36,13 +36,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-
 #include <cuda_runtime_api.h>
 #include <nvjpeg.h>
 
-
-#ifndef H_HVJPEG
-#define H_NVJPEG
+#pragma once
 
 #define CHECK_CUDA(call)                                                        \
     {                                                                           \
@@ -666,5 +663,3 @@ int findParamIndex(const char **argv, int argc, const char *parm) {
 
   return -1;
 }
-
-#endif
