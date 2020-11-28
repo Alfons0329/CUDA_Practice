@@ -28,7 +28,7 @@
 
 
 #include "nvjpegDecoder.h"
-#include "./image_processing.cpp"
+#include "./image_processing.cu"
 
 int decode_images(const FileData &img_data, const std::vector<size_t> &img_len,
         std::vector<nvjpegImage_t> &out, decode_params_t &params,
@@ -211,8 +211,7 @@ double process_images(FileNames &image_names, decode_params_t &params,
         }
 
         /*----------- Your own image processing starts here! -----------*/
-        image_processing_gpu<<<1,1>>>(iout, widths, heights, params);
-        cudaDeviceSynchronize();
+        image_processing_gpu(iout, widths, heights, params);
         // image_processing_cpu(iout, widths, heights, params);
         /*----------- Your own image processing ends here! -----------*/
 
