@@ -28,7 +28,7 @@
 
 
 #include "nvjpegDecoder.h"
-
+#include "image_processing.cpp"
 
 int decode_images(const FileData &img_data, const std::vector<size_t> &img_len,
         std::vector<nvjpegImage_t> &out, decode_params_t &params,
@@ -77,8 +77,7 @@ int decode_images(const FileData &img_data, const std::vector<size_t> &img_len,
 
     CHECK_CUDA(cudaEventRecord(startEvent, params.stream));
 
-    if(batched_bitstreams.size() > 0)
-    {
+    if(batched_bitstreams.size() > 0){
         CHECK_NVJPEG(
                 nvjpegDecodeBatchedInitialize(params.nvjpeg_handle, params.nvjpeg_state,
                     batched_bitstreams.size(), 1, params.fmt));
@@ -88,8 +87,7 @@ int decode_images(const FileData &img_data, const std::vector<size_t> &img_len,
                     batched_bitstreams_size.data(), batched_output.data(), params.stream));
     }
 
-    if(otherdecode_bitstreams.size() > 0)
-    {
+    if(otherdecode_bitstreams.size() > 0){
         CHECK_NVJPEG(nvjpegStateAttachDeviceBuffer(params.nvjpeg_decoupled_state, params.device_buffer));
         int buffer_index = 0;
         CHECK_NVJPEG(nvjpegDecodeParamsSetOutputFormat(params.nvjpeg_decode_params, params.fmt));
@@ -211,6 +209,10 @@ double process_images(FileNames &image_names, decode_params_t &params,
             total_processed += params.batch_size;
             test_time += time;
         }
+
+        /*----------- Your own image processing starts here! -----------*/
+        image_processing(iout, widths, heights, params)
+        /*----------- Your own image processing ends here! -----------*/
 
         if (params.write_decoded)
             write_images(iout, widths, heights, params, current_names);

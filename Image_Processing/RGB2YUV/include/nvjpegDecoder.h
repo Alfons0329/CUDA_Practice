@@ -41,6 +41,9 @@
 #include <nvjpeg.h>
 
 
+#ifndef H_HVJPEG
+#define H_NVJPEG
+
 #define CHECK_CUDA(call)                                                        \
     {                                                                           \
         cudaError_t _e = (call);                                                \
@@ -663,3 +666,5 @@ int findParamIndex(const char **argv, int argc, const char *parm) {
 
   return -1;
 }
+
+#endif
