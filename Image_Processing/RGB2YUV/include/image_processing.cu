@@ -5,8 +5,10 @@
 using namespace std;
 
 __global__ void simple_kernel_function_RGB(unsigned char* img_R, unsigned char* img_G, unsigned char* img_B, const int& img_row, const int& img_col){
+    printf("CUDA kernel function, img_row %d img_col %d \n", img_row, img_col);
     for(int i = 0; i < img_row / 2; i++){
         for(int j = 0; j < img_col; j++){
+            printf("[KERNEL]: Access i %d j %d \n", i, j);
             img_R[i * img_col + j] = 0;
             img_G[i * img_col + j] = 255;
             img_B[i * img_col + j] = 255;
@@ -94,15 +96,22 @@ void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vect
             img_R = iout[batch].channel[0];
             img_G = iout[batch].channel[1];
             img_B = iout[batch].channel[2];
+            printf("RGB image! \n");
+            if(!img_R || !img_G || !img_B){
+                fprintf(stderr, "%s", "Nullpointerexception \n");
+            }
             simple_kernel_function_RGB<<<1, 1>>>(img_R, img_G, img_B, img_row, img_col);
+            printf("Finished GPU kernel call \n");
         }
         else if(params.fmt == NVJPEG_OUTPUT_BGR){
             img_R = iout[batch].channel[2];
             img_G = iout[batch].channel[1];
             img_B = iout[batch].channel[0];
+            printf("BGR image \n");
             simple_kernel_function_RGB<<<1, 1>>>(img_B, img_G, img_R, img_row, img_col);
         }
         else if(params.fmt == NVJPEG_OUTPUT_RGBI || params.fmt == NVJPEG_OUTPUT_BGRI){
+            printf("RGBi / BGRi image \n");
             img_RGB = iout[batch].channel[0];
             // simple_kernel_function_RGBI();
         }
