@@ -1,21 +1,18 @@
 #include "nvjpegDecoder.h"
-#include <cuda.h>
-#include <cuda_runtime.h>
+// #include <cuda.h>
+// #include <cuda_runtime.h>
+#define BLOCK_SIZE 32
 
 using namespace std;
 
-__global__ void simple_kernel_function_RGB(unsigned char* img_R, unsigned char* img_G, unsigned char* img_B, const int& img_row, const int& img_col){
-    printf("CUDA kernel function, img_row %d img_col %d \n", img_row, img_col);
-    /*
-    for(int i = 0; i < img_row; i++){
-        for(int j = 0; j < img_col; j++){
-            printf("[KERNEL]: Access i %d j %d \n", i, j);
-            img_R[i * img_col + j] = 0;
-            img_G[i * img_col + j] = 255;
-            img_B[i * img_col + j] = 255;
-        }
+__global__ void simple_kernel_function_RGB(unsigned char* img_R, unsigned char* img_G, unsigned char* img_B, const int img_row, const int img_col){
+    int row = threadIdx.y + blockIdx.y * blockDim.y;
+    int col = threadIdx.x + blockIdx.x * blockDim.x;
+    if (row < img_row && col < img_col) {
+        img_R[row * img_col + col] = 0;
+        img_G[row * img_col + col] = 255;
+        img_B[row * img_col + col] = 0;
     }
-     */
 }
 
 void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vector<int> &heights, decode_params_t &params){
@@ -27,7 +24,10 @@ void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vect
     for(int batch = 0; batch < params.batch_size; batch++){
         int img_row = heights[batch];
         int img_col = widths[batch];
-        printf("Empty CUDA Kernel function call! \n");
+        int grid_row = (img_row + BLOCK_SIZE - 1) / BLOCK_SIZE;
+        int grid_col = (img_col + BLOCK_SIZE - 1) / BLOCK_SIZE;
+        dim3 dimGrid(grid_col, grid_row);
+        dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);
         if(params.fmt == NVJPEG_OUTPUT_RGB){
             img_R = iout[batch].channel[0];
             img_G = iout[batch].channel[1];
@@ -35,7 +35,7 @@ void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vect
             if(img_R == NULL || img_G == NULL || img_B == NULL){
                 fprintf(stderr, "%s", "Nullpointerexception \n");
             }
-            simple_kernel_function_RGB<<<1, 1>>>(img_R, img_G, img_B, img_row, img_col);
+            simple_kernel_function_RGB<<<dimGrid, dimBlock>>>(img_R, img_G, img_B, img_row, img_col);
             printf("Finished GPU kernel call \n");
         }
         else if(params.fmt == NVJPEG_OUTPUT_BGR){
@@ -51,6 +51,7 @@ void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vect
             // simple_kernel_function_RGBI();
         }
         else{
+            printf("no-operations\n");
             // nop
         }
     }
