@@ -4,6 +4,7 @@ BIN=./bin/
 
 SOURCE=$(SRC)main.cu
 TARGET=$(BIN)main_out
+TARGET_DBG=$(BIN)main_out_dbg
 
 #------------------------Compiler and flag-----------------------#
 # Compilers
@@ -16,13 +17,16 @@ LDFLAGS=-L../lib64 -L/usr/local/cuda-11.1/lib64
 INCLUDES=-I./include -I/usr/local/cuda-11.1/include
 LIBS=-ldl -lrt -lcudart -lnvjpeg
 RPATH=-Wl,-rpath=../lib64 -Wl,-rpath=/usr/local/cuda-11.1/lib64
-CXXFLAGS:= -O2 -std=c++14 $(LDFLAGS) $(INCLUDES) $(LIBS) #$(RPATH)
+CXXFLAGS:= -std=c++14 $(LDFLAGS) $(INCLUDES) $(LIBS) #$(RPATH)
 
 #---------------------------Rules-------------------------------#
-all: cuda
+all: cuda debug
 
 cuda: $(SOURCE)  
 	$(CC) -m64 $(SOURCE) $(CXXFLAGS) -o $(TARGET)
+
+debug: $(SOURCE)
+	$(CC) -m64 $(SOURCE) $(CXXFLAGS) -g -o $(TARGET_DBG)
 
 .PHONY: clean
 

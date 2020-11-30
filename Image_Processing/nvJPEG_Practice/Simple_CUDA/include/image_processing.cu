@@ -6,6 +6,7 @@ using namespace std;
 
 __global__ void simple_kernel_function_RGB(unsigned char* img_R, unsigned char* img_G, unsigned char* img_B, const int& img_row, const int& img_col){
     printf("CUDA kernel function, img_row %d img_col %d \n", img_row, img_col);
+    /*
     for(int i = 0; i < img_row; i++){
         for(int j = 0; j < img_col; j++){
             printf("[KERNEL]: Access i %d j %d \n", i, j);
@@ -14,6 +15,7 @@ __global__ void simple_kernel_function_RGB(unsigned char* img_R, unsigned char* 
             img_B[i * img_col + j] = 255;
         }
     }
+     */
 }
 
 void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vector<int> &heights, decode_params_t &params){
@@ -25,13 +27,12 @@ void image_processing_gpu(vector<nvjpegImage_t> &iout, vector<int> &widths, vect
     for(int batch = 0; batch < params.batch_size; batch++){
         int img_row = heights[batch];
         int img_col = widths[batch];
-
+        printf("Empty CUDA Kernel function call! \n");
         if(params.fmt == NVJPEG_OUTPUT_RGB){
             img_R = iout[batch].channel[0];
             img_G = iout[batch].channel[1];
             img_B = iout[batch].channel[2];
-            printf("RGB image! \n");
-            if(!img_R || !img_G || !img_B){
+            if(img_R == NULL || img_G == NULL || img_B == NULL){
                 fprintf(stderr, "%s", "Nullpointerexception \n");
             }
             simple_kernel_function_RGB<<<1, 1>>>(img_R, img_G, img_B, img_row, img_col);
