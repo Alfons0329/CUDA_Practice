@@ -211,8 +211,10 @@ double process_images(FileNames &image_names, decode_params_t &params,
         }
 
         /*----------- Your own image processing starts here! -----------*/
-        image_processing_gpu(iout, widths, heights, params);
-        // image_processing_cpu(iout, widths, heights, params);
+        if(image_processing_gpu(iout, widths, heights, params)){
+            fprintf(stderr, "%s", "[ERROR]: GPU Image processing error \n");
+            return EXIT_FAILURE;
+        }
         /*----------- Your own image processing ends here! -----------*/
 
         if (params.write_decoded)
